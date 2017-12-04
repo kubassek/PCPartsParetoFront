@@ -22,6 +22,7 @@ public class EALoop {
     public double mutationChance;
     public double mutationRate;
     private ArrayList<Integer> parentLocation = new ArrayList<Integer>();
+    private int selectionIndividual=0;
 
     //MAin ea loop========================
     public void mainLoop(){
@@ -63,21 +64,28 @@ public class EALoop {
 
         //Generate a new random population and print results
 
+        System.out.println("====================Population=======================");
         for(int i=0;i<populationSize;i++){
             //System.out.println("population member==========================================");
-            population.add(new PC(pull.pcPartsCPU.get(random.nextInt(pull.pcPartsCPU.size()-1)), pull.pcPartsGPU.get(random.nextInt(pull.pcPartsGPU.size()-1)), pull.pcPartsDrive.get(pull.pcPartsDrive.size()-1)));
+            population.add(new PC(pull.pcPartsCPU.get(random.nextInt(pull.pcPartsCPU.size()-1)), pull.pcPartsGPU.get(random.nextInt(pull.pcPartsGPU.size()-1)), pull.pcPartsDrive.get(random.nextInt(pull.pcPartsDrive.size()-1))));
             //System.out.println(population.get(i).getCpu().getPartName() + " " + population.get(i).getGpu().getPartName() + " " + population.get(i).getDrive().getPartName() + " $" + population.get(i).getPCPrice() + " fitness value: " + population.get(i).getFitness());
+            //System.out.println(population.get(i).getFitness() + " $" + population.get(i).getPCPrice());
         }
+        //System.out.println("===========================================");
     }
 
     public ArrayList<PC> selectParents(){
         ArrayList<PC> parents = new ArrayList<PC>();
         parentLocation.clear();
 
-        for(int i=0;i<2;i++) {
-            parentLocation.add(random.nextInt(populationSize));
-            parents.add(population.get(parentLocation.get(i)));
-        }
+        parents.add(population.get(selectionIndividual));
+        parentLocation.add(selectionIndividual);
+        parentLocation.add(random.nextInt(populationSize));
+        parents.add(population.get(parentLocation.get(1)));
+
+        if(selectionIndividual == populationSize){
+            selectionIndividual = 0;
+        }else selectionIndividual++;
 
         return parents;
     }
@@ -108,6 +116,7 @@ public class EALoop {
                     //System.out.println(population.get(parentLocation.get(j)).getFitness() + " $" + population.get(parentLocation.get(j)).getPCPrice() + " replaced by:"+ children.get(i).getFitness() + " " + children.get(i).getPCPrice());
                     population.remove(parentLocation.get(j));
                     population.add(children.get(i));
+                    System.out.println(children.get(i).getFitness() + " $" + children.get(i).getPCPrice());
                 }
             }
         }
@@ -127,6 +136,14 @@ public class EALoop {
         System.out.println("=====================Pareto Front========================");
         for(int i=0; i<paretoFront.size();i++){
             System.out.println(paretoFront.get(i).getFitness() + " $" + paretoFront.get(i).getPCPrice());
+           // System.out.println(paretoFront.get(i).getCpu().getPartName() + " " + paretoFront.get(i).getGpu().getPartName() + " " + paretoFront.get(i).getDrive().getPartName());
+        }
+
+        System.out.println("\n");
+
+        for(int i=0; i<paretoFront.size();i++){
+            System.out.println(paretoFront.get(i).getFitness() + " $" + paretoFront.get(i).getPCPrice());
+            System.out.println(paretoFront.get(i).getCpu().getPartName() + " " + paretoFront.get(i).getGpu().getPartName() + " " + paretoFront.get(i).getDrive().getPartName());
         }
     }
 

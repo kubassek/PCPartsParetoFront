@@ -23,8 +23,8 @@ public class PullPCParts {
     public void readPartsData(){
         try {
 
-            fileLocations.add("/Users/jakubsobczak/IdeaProjects/PCPartsEA/CPU.csv");
-            fileLocations.add("/Users/jakubsobczak/IdeaProjects/PCPartsEA/GPU.csv");
+            fileLocations.add("/Users/jakubsobczak/IdeaProjects/PCPartsEA/CPU4.csv");
+            fileLocations.add("/Users/jakubsobczak/IdeaProjects/PCPartsEA/GPU2.csv");
             fileLocations.add("/Users/jakubsobczak/IdeaProjects/PCPartsEA/HDD.csv");
 
             for(int i=0;i<3;i++) {

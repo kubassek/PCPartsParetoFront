@@ -9,7 +9,7 @@ public class PC{
         this.fitness = this.fitnessCalculator();
     }
 
-    private double cpuWeight = 1;
+    private double cpuWeight = 0.5;
     private double gpuWeight = 1;
     private double driveWeight = 0.5;
     private PCParts cpu;
@@ -21,7 +21,7 @@ public class PC{
     public double fitnessCalculator(){
         double calculatedFitness = 0;
 
-        calculatedFitness = (cpu.getPerformace() * cpuWeight) + (gpu.getPerformace() * gpuWeight) + (drive.getPerformace() * driveWeight);
+        calculatedFitness = (((cpu.getPerformace() * 100)/27000)*cpuWeight + ((gpu.getPerformace() * 100)/14000)*gpuWeight + ((drive.getPerformace() * 100)/17000)*driveWeight);
 
         return calculatedFitness;
     }
